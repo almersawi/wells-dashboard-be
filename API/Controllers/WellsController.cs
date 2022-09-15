@@ -1,32 +1,103 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
+using API.DTOs;
 using API.Entities;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class WellsController : ControllerBase
+    public class WellsController : BaseApiController
     {
         private readonly DataContext _context;
-        public WellsController(DataContext context)
+        private readonly IMapper _mapper;
+
+        public WellsController(DataContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Well>>> GetWells()
+        public async Task<ActionResult<List<WellDto>>> GetWells()
         {
-            return await _context.Wells.ToListAsync();
+            var wells = await _context.Wells
+                .ProjectTo<WellDto>(_mapper.ConfigurationProvider)
+                .ToListAsync();
+
+            return Ok(wells);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Well>> GetWell(int id)
+        [HttpGet("id/{id}")]
+        public async Task<ActionResult<WellDto>> GetWell(int id)
         {
-            return await _context.Wells.FindAsync(id);
+            var well = await _context.Wells
+                .Where(x => x.Id == id)
+                .ProjectTo<WellDto>(_mapper.ConfigurationProvider)
+                .SingleOrDefaultAsync();
+
+            return Ok(well);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<WellDto>> AddWell(AddWellDto addDto)
+        {
+            var well = new Well
+            { };
+
+            _mapper.Map(addDto, well);
+
+            _context.Wells.Add(well);
+            await _context.SaveChangesAsync();
+
+            var wellToReturn = _mapper.Map<WellDto>(well);
+
+            return Ok(wellToReturn);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<WellDto>> UpdateWell(WellDto updateDto)
+        {
+            var well = await _context.Wells
+                .Where(x => x.Id == updateDto.Id)
+                .FirstOrDefaultAsync();
+
+            if(well == null)
+            {
+                return BadRequest("No well with this id");
+            }
+
+            _mapper.Map(updateDto, well);
+            _context.Wells.Update(well);
+
+            await _context.SaveChangesAsync();
+
+            var wellToReturn = _mapper.Map<WellDto>(well);
+
+            return Ok(wellToReturn);
+        }
+
+        [HttpDelete("id/{id}")]
+        public async Task<ActionResult> DeleteWell(int id)
+        {
+            var well = await _context.Wells
+                .Where(x => x.Id == id)
+                .FirstOrDefaultAsync();
+
+            if(well == null)
+            {
+                return BadRequest("No well with this id");
+            }
+
+            _context.Wells.Remove(well);
+
+            await _context.SaveChangesAsync();
+
+            return Ok("Well Deleted");
         }
     }
 }
