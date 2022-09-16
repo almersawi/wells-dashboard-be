@@ -11,25 +11,28 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-    public class WellsController : BaseApiController
+    public class WellController : BaseApiController
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
 
-        public WellsController(DataContext context, IMapper mapper)
+        public WellController(DataContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<WellDto>>> GetWells()
+        public async Task<ActionResult<ReturnDataListDto<WellDto>>> GetWells()
         {
             var wells = await _context.Wells
                 .ProjectTo<WellDto>(_mapper.ConfigurationProvider)
                 .ToListAsync();
 
-            return Ok(wells);
+            return Ok(new ReturnDataListDto<WellDto>
+            {
+                Data = wells
+            });
         }
 
         [HttpGet("id/{id}")]
@@ -66,7 +69,7 @@ namespace API.Controllers
                 .Where(x => x.Id == updateDto.Id)
                 .FirstOrDefaultAsync();
 
-            if(well == null)
+            if (well == null)
             {
                 return BadRequest("No well with this id");
             }
@@ -88,7 +91,7 @@ namespace API.Controllers
                 .Where(x => x.Id == id)
                 .FirstOrDefaultAsync();
 
-            if(well == null)
+            if (well == null)
             {
                 return BadRequest("No well with this id");
             }
