@@ -3,14 +3,16 @@ using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220916202905_WellSchematicAndTrajectory")]
+    partial class WellSchematicAndTrajectory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,9 +31,6 @@ namespace API.Data.Migrations
                         .HasColumnType("real");
 
                     b.Property<float>("OD")
-                        .HasColumnType("real");
-
-                    b.Property<float>("TOC")
                         .HasColumnType("real");
 
                     b.Property<float>("Top")
@@ -57,23 +56,23 @@ namespace API.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<double>("Azi")
-                        .HasColumnType("float");
+                    b.Property<float>("Azi")
+                        .HasColumnType("real");
 
-                    b.Property<double>("East")
-                        .HasColumnType("float");
+                    b.Property<float>("East")
+                        .HasColumnType("real");
 
-                    b.Property<double>("Inc")
-                        .HasColumnType("float");
+                    b.Property<float>("Inc")
+                        .HasColumnType("real");
 
-                    b.Property<double>("Md")
-                        .HasColumnType("float");
+                    b.Property<float>("Md")
+                        .HasColumnType("real");
 
-                    b.Property<double>("North")
-                        .HasColumnType("float");
+                    b.Property<float>("North")
+                        .HasColumnType("real");
 
-                    b.Property<double>("Tvd")
-                        .HasColumnType("float");
+                    b.Property<float>("Tvd")
+                        .HasColumnType("real");
 
                     b.Property<int>("WellId")
                         .HasColumnType("int");

@@ -11,6 +11,12 @@ namespace API.Helpers
             CreateMap<Well, WellDto>(); // Get 
             CreateMap<WellDto, Well>(); // Update
             CreateMap<AddWellDto, Well>();
+
+            CreateMap<Schematic, WellSchematicDto>();
+            CreateMap<WellSchematicDto, Schematic>();
+
+            CreateMap<Trajectory, TrajectoryDto>();
+            CreateMap<TrajectoryDto, Trajectory>();
         }
     }
 }

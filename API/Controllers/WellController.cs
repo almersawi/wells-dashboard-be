@@ -43,10 +43,13 @@ namespace API.Controllers
                 .ProjectTo<WellDto>(_mapper.ConfigurationProvider)
                 .SingleOrDefaultAsync();
 
-            return Ok(well);
+             return Ok(new ReturnSingleDataDto<WellDto>
+            {
+                Data = well
+            });
         }
 
-        [HttpPost]
+        [HttpPost("add")]
         public async Task<ActionResult<WellDto>> AddWell(AddWellDto addDto)
         {
             var well = new Well
@@ -62,7 +65,7 @@ namespace API.Controllers
             return Ok(wellToReturn);
         }
 
-        [HttpPut]
+        [HttpPut("update")]
         public async Task<ActionResult<WellDto>> UpdateWell(WellDto updateDto)
         {
             var well = await _context.Wells
