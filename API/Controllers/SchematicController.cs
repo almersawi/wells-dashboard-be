@@ -27,6 +27,7 @@ namespace API.Controllers
         {
             var data = await _context.Schematic
                 .Where(x => x.WellId == wellId)
+                .OrderBy( x => x.Bottom)
                 .ProjectTo<WellSchematicDto>(_mapper.ConfigurationProvider)
                 .ToListAsync();
 

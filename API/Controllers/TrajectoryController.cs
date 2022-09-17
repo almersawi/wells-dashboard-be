@@ -28,6 +28,7 @@ namespace API.Controllers
         {
             var data = await _context.Trajectory
                 .Where(x => x.WellId == wellId)
+                .OrderBy(x => x.Md)
                 .ProjectTo<TrajectoryDto>(_mapper.ConfigurationProvider)
                 .ToListAsync();
 
@@ -41,13 +42,22 @@ namespace API.Controllers
         [HttpPost("add")]
         public async Task<ActionResult> AddWellTrajectory(AddTrajectoryDto addDto)
         {
+            // attach wellId to all data
+            addDto.Data.Add(new TrajectoryDto { Md = addDto.Data[addDto.Data.Count - 1].Md + 50 });
+            var dataToUse = new List<TrajectoryDto>{};
+            _mapper.Map(addDto.Data, dataToUse);
+            dataToUse.ForEach(item => {
+                item.WellId = addDto.WellId;
+            });
+
             // remove all available data
             var oldData = await _context.Trajectory.Where(x => x.WellId == addDto.WellId).ToListAsync();
             _context.Trajectory.RemoveRange(oldData);
 
             // calculate trajectory
-            addDto.Data.Sort((a, z) => z.Md.CompareTo(z.Md));
-            var calculatedTrajectory = TrajectoryCalculations.Calculate(addDto.Data);
+            dataToUse.Sort((a, z) => z.Md.CompareTo(z.Md));
+            var calculatedTrajectory = TrajectoryCalculations.Calculate(dataToUse);
+            calculatedTrajectory.RemoveAt(calculatedTrajectory.Count - 1); // last record has no calculated data
             var dataToStore = new List<Trajectory>{};
             _mapper.Map(calculatedTrajectory, dataToStore);
 
