@@ -60,12 +60,15 @@ namespace API.Controllers
                 .Where(x => x.Id == updateDto.Id)
                 .FirstOrDefaultAsync();
 
+            var wellId = schematic.WellId;
+
             if (schematic == null)
             {
                 return BadRequest("No well with this id");
             }
 
             _mapper.Map(updateDto, schematic);
+            schematic.WellId = wellId;
             _context.Schematic.Update(schematic);
 
             await _context.SaveChangesAsync();

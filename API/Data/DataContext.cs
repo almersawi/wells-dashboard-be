@@ -12,5 +12,6 @@ namespace API.Data
         public DbSet<Well> Wells { get; set; }
         public DbSet<Schematic> Schematic { get; set; }
         public DbSet<Trajectory> Trajectory { get; set; }
+        public DbSet<ProductionData> ProductionData { get; set; }
     }
 }

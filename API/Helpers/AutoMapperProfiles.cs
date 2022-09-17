@@ -17,6 +17,9 @@ namespace API.Helpers
 
             CreateMap<Trajectory, TrajectoryDto>();
             CreateMap<TrajectoryDto, Trajectory>();
+
+            CreateMap<ProductionDataDto, ProductionData>();
+            CreateMap<ProductionData, ProductionDataDto>();
         }
     }
 }
