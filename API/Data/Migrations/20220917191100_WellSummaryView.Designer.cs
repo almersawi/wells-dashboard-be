@@ -4,14 +4,16 @@ using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220917191100_WellSummaryView")]
+    partial class WellSummaryView
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -119,14 +121,14 @@ namespace API.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<float>("ChokeSize")
-                        .HasColumnType("real");
+                    b.Property<double>("ChokeSize")
+                        .HasColumnType("float");
 
-                    b.Property<float>("Lat")
-                        .HasColumnType("real");
+                    b.Property<double>("Lat")
+                        .HasColumnType("float");
 
-                    b.Property<float>("Lon")
-                        .HasColumnType("real");
+                    b.Property<double>("Lon")
+                        .HasColumnType("float");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -144,56 +146,38 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Views.WellSummaryView", b =>
                 {
-                    b.Property<double?>("AvgProdRate")
+                    b.Property<double>("AvgProdRate")
                         .HasColumnType("float");
 
-                    b.Property<double?>("AvgWhPressure")
+                    b.Property<double>("AvgWhPressure")
                         .HasColumnType("float");
 
-                    b.Property<double?>("LastEast")
+                    b.Property<double>("LastProdRate")
                         .HasColumnType("float");
 
-                    b.Property<double?>("LastNorth")
+                    b.Property<double>("LastWhPressure")
                         .HasColumnType("float");
 
-                    b.Property<DateTime?>("LastProdDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double?>("LastProdRate")
+                    b.Property<double>("Lat")
                         .HasColumnType("float");
 
-                    b.Property<double?>("LastTvd")
+                    b.Property<double>("Lon")
                         .HasColumnType("float");
 
-                    b.Property<double?>("LastWhPressure")
+                    b.Property<double>("MaxProdRate")
                         .HasColumnType("float");
 
-                    b.Property<float?>("Lat")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Lon")
-                        .HasColumnType("real");
-
-                    b.Property<double?>("MaxProdRate")
+                    b.Property<double>("MaxSchematicBottom")
                         .HasColumnType("float");
 
-                    b.Property<float?>("MaxSchematicBottom")
-                        .HasColumnType("real");
-
-                    b.Property<double?>("MaxWhPressure")
+                    b.Property<double>("MaxWhPressure")
                         .HasColumnType("float");
 
-                    b.Property<double?>("MinProdRate")
+                    b.Property<double>("MinProdRate")
                         .HasColumnType("float");
 
-                    b.Property<double?>("MinWhPressure")
+                    b.Property<double>("MinWhPressure")
                         .HasColumnType("float");
-
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Type")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("WellId")
                         .HasColumnType("int");

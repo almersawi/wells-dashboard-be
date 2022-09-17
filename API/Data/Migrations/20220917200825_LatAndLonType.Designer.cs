@@ -4,14 +4,16 @@ using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220917200825_LatAndLonType")]
+    partial class LatAndLonType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -156,9 +158,6 @@ namespace API.Data.Migrations
                     b.Property<double?>("LastNorth")
                         .HasColumnType("float");
 
-                    b.Property<DateTime?>("LastProdDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<double?>("LastProdRate")
                         .HasColumnType("float");
 
@@ -188,12 +187,6 @@ namespace API.Data.Migrations
 
                     b.Property<double?>("MinWhPressure")
                         .HasColumnType("float");
-
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Type")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("WellId")
                         .HasColumnType("int");
