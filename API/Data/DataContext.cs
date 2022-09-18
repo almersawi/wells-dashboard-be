@@ -17,13 +17,20 @@ namespace API.Data
 
         // Views
         public DbSet<WellSummaryView> Well_Summary_view { get; set; }
+        public DbSet<DashboardView> Dashboard_View { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<WellSummaryView>(c => 
+            modelBuilder.Entity<WellSummaryView>(c =>
             {
                 c.HasNoKey();
                 c.ToView("Well_Summary_view");
+            });
+
+            modelBuilder.Entity<DashboardView>(c =>
+            {
+                c.HasNoKey();
+                c.ToView("Dashboard_View");
             });
         }
     }

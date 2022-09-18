@@ -4,14 +4,16 @@ using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220918023312_DashboardViewInit")]
+    partial class DashboardViewInit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -134,9 +136,6 @@ namespace API.Data.Migrations
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("StringType")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");
 
@@ -150,47 +149,17 @@ namespace API.Data.Migrations
                     b.Property<int>("AbandonedWellCount")
                         .HasColumnType("int");
 
-                    b.Property<double>("CurrentRate")
-                        .HasColumnType("float");
-
-                    b.Property<string>("CurrentRateDate")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("DualStringWellCount")
-                        .HasColumnType("int");
-
                     b.Property<int>("FlowingWellCount")
                         .HasColumnType("int");
 
                     b.Property<int>("InjectorWellCount")
                         .HasColumnType("int");
 
-                    b.Property<double>("MaxDailyRate")
-                        .HasColumnType("float");
-
-                    b.Property<string>("MaxDailyRateDate")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("MaxWellCurrentRate")
-                        .HasColumnType("float");
-
-                    b.Property<double>("MinDailyRate")
-                        .HasColumnType("float");
-
-                    b.Property<string>("MinDailyRateDate")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("ProducerWellCount")
                         .HasColumnType("int");
 
                     b.Property<int>("ShutinWellCount")
                         .HasColumnType("int");
-
-                    b.Property<int>("SingleStringWellCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("WellWithMaxCurrentRate")
-                        .HasColumnType("nvarchar(max)");
 
                     b.ToView("Dashboard_View");
                 });
@@ -249,9 +218,6 @@ namespace API.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StringType")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Type")
