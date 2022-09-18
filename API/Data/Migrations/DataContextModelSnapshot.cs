@@ -119,9 +119,6 @@ namespace API.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<float>("ChokeSize")
-                        .HasColumnType("real");
-
                     b.Property<float>("Lat")
                         .HasColumnType("real");
 

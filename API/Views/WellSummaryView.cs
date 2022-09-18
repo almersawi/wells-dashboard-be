@@ -6,11 +6,9 @@ namespace API.Views
     {
         public int WellId { get; set; }
         public string Name { get; set; }
-
         public string Status { get; set; }
         public string Type { get; set; }
         public string StringType { get; set; }
-        
         public float? Lat { get; set; }
         public float? Lon { get; set; }
         public double? MinProdRate { get; set; }

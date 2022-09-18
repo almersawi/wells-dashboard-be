@@ -11,7 +11,6 @@ namespace API.Entities
         public string Status { get; set; }
         public string Type { get; set; }
         public string StringType { get; set; }
-        public float ChokeSize { get; set; }
         public ICollection<Schematic> Schematic { get; set; }
         public ICollection<Trajectory> Trajectory { get; set; }
         public ICollection<ProductionData> ProductionData { get; set; }
