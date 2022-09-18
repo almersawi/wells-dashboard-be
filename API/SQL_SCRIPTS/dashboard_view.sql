@@ -1,7 +1,7 @@
 USE [Wells_Dashboard]
 GO
 
-/****** Object:  View [dbo].[Dashboard_View]    Script Date: 9/18/2022 2:48:54 PM ******/
+/****** Object:  View [dbo].[Dashboard_View]    Script Date: 9/18/2022 8:43:14 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -10,34 +10,34 @@ GO
 
 CREATE OR ALTER VIEW [dbo].[Dashboard_View]
 AS
-SELECT        dbo.GetWellCount(N'Flowing') AS FlowingWellCount, dbo.GetWellCount(N'Shutin') AS ShutinWellCount, dbo.GetWellCount(N'Abandoned') AS AbandonedWellCount, dbo.GetWellCount(N'Producer') AS ProducerWellCount, 
-                         dbo.GetWellCount(N'Injector') AS InjectorWellCount, dbo.GetWellCount(N'Single') AS SingleStringWellCount, dbo.GetWellCount(N'Dual') AS DualStringWellCount,
-                             (SELECT        TOP (1) rate_sum
-                               FROM            dbo.GetRateSumTable() AS p
-                               ORDER BY date_days DESC) AS CurrentRate,
-                             (SELECT        TOP (1) date_days
-                               FROM            dbo.GetRateSumTable() AS p
-                               ORDER BY date_days DESC) AS CurrentRateDate,
-                             (SELECT        MAX(rate_sum) AS Expr1
-                               FROM            dbo.GetRateSumTable() AS p) AS MaxDailyRate,
-                             (SELECT        TOP (1) date_days
-                               FROM            dbo.GetRateSumTable() AS p
-                               ORDER BY rate_sum DESC) AS MaxDailyRateDate,
-                             (SELECT        MIN(rate_sum) AS Expr1
-                               FROM            dbo.GetRateSumTable() AS p) AS MinDailyRate,
-                             (SELECT        TOP (1) date_days
-                               FROM            dbo.GetRateSumTable() AS p
-                               ORDER BY rate_sum) AS MinDailyRateDate,
-                             (SELECT        TOP (1) Rate
-                               FROM            dbo.GetCurrentRateTable() AS GetCurrentRateTable_1
-                               ORDER BY Rate DESC) AS MaxWellCurrentRate,
-                             (SELECT        TOP (1) Name
-                               FROM            dbo.GetCurrentRateTable() AS GetCurrentRateTable_2
-                               ORDER BY Rate DESC) AS WellWithMaxCurrentRate
-FROM            dbo.Production_Data AS Production_Data_1 INNER JOIN
-                         dbo.Wells ON Production_Data_1.WellId = dbo.Wells.Id INNER JOIN
-                         dbo.Well_Schematic ON dbo.Wells.Id = dbo.Well_Schematic.WellId INNER JOIN
-                         dbo.Well_Trajectory ON dbo.Wells.Id = dbo.Well_Trajectory.WellId
+SELECT dbo.GetWellCount(N'Flowing') AS FlowingWellCount, dbo.GetWellCount(N'Shutin') AS ShutinWellCount, dbo.GetWellCount(N'Abandoned') AS AbandonedWellCount, dbo.GetWellCount(N'Producer') AS ProducerWellCount, 
+                  dbo.GetWellCount(N'Injector') AS InjectorWellCount, dbo.GetWellCount(N'Single') AS SingleStringWellCount, dbo.GetWellCount(N'Dual') AS DualStringWellCount,
+                      (SELECT TOP (1) rate_sum
+                       FROM      dbo.GetRateSumTable() AS p
+                       ORDER BY date_days DESC) AS CurrentRate,
+                      (SELECT TOP (1) date_days
+                       FROM      dbo.GetRateSumTable() AS p
+                       ORDER BY date_days DESC) AS CurrentRateDate,
+                      (SELECT MAX(rate_sum) AS Expr1
+                       FROM      dbo.GetRateSumTable() AS p) AS MaxDailyRate,
+                      (SELECT TOP (1) date_days
+                       FROM      dbo.GetRateSumTable() AS p
+                       ORDER BY rate_sum DESC) AS MaxDailyRateDate,
+                      (SELECT MIN(rate_sum) AS Expr1
+                       FROM      dbo.GetRateSumTable() AS p) AS MinDailyRate,
+                      (SELECT TOP (1) date_days
+                       FROM      dbo.GetRateSumTable() AS p
+                       ORDER BY rate_sum) AS MinDailyRateDate,
+                      (SELECT TOP (1) Rate
+                       FROM      dbo.GetCurrentRateTable() AS GetCurrentRateTable_1
+                       ORDER BY Rate DESC) AS MaxWellCurrentRate,
+                      (SELECT TOP (1) Name
+                       FROM      dbo.GetCurrentRateTable() AS GetCurrentRateTable_2
+                       ORDER BY Rate DESC) AS WellWithMaxCurrentRate
+FROM     dbo.Production_Data AS Production_Data_1 RIGHT OUTER JOIN
+                  dbo.Wells ON Production_Data_1.WellId = dbo.Wells.Id LEFT OUTER JOIN
+                  dbo.Well_Schematic ON dbo.Wells.Id = dbo.Well_Schematic.WellId LEFT OUTER JOIN
+                  dbo.Well_Trajectory ON dbo.Wells.Id = dbo.Well_Trajectory.WellId
 GROUP BY dbo.Wells.Id
 GO
 
@@ -162,7 +162,7 @@ Begin DesignProperties =
       End
       Begin ColumnWidths = 14
          Width = 284
-         Width = 3195
+         Width = 3192
          Width = 1500
          Width = 1500
          Width = 1500
@@ -181,11 +181,11 @@ Begin DesignProperties =
       Begin ColumnWidths = 12
          Column = 1440
          Alias = 900
-         Table = 1170
+         Table = 1176
          Output = 720
          Append = 1400
          NewValue = 1170
-         SortType = 1350
+         SortType = 1356
         ' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'Dashboard_View'
 ELSE
 BEGIN
@@ -309,7 +309,7 @@ Begin DesignProperties =
       End
       Begin ColumnWidths = 14
          Width = 284
-         Width = 3195
+         Width = 3192
          Width = 1500
          Width = 1500
          Width = 1500
@@ -328,19 +328,19 @@ Begin DesignProperties =
       Begin ColumnWidths = 12
          Column = 1440
          Alias = 900
-         Table = 1170
+         Table = 1176
          Output = 720
          Append = 1400
          NewValue = 1170
-         SortType = 1350
+         SortType = 1356
         ' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'Dashboard_View'
 END
 GO
 
 IF NOT EXISTS (SELECT * FROM sys.fn_listextendedproperty(N'MS_DiagramPane2' , N'SCHEMA',N'dbo', N'VIEW',N'Dashboard_View', NULL,NULL))
-	EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane2', @value=N' SortOrder = 1410
+	EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane2', @value=N' SortOrder = 1416
          GroupBy = 1350
-         Filter = 1350
+         Filter = 1356
          Or = 1350
          Or = 1350
          Or = 1350
@@ -350,9 +350,9 @@ End
 ' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'Dashboard_View'
 ELSE
 BEGIN
-	EXEC sys.sp_updateextendedproperty @name=N'MS_DiagramPane2', @value=N' SortOrder = 1410
+	EXEC sys.sp_updateextendedproperty @name=N'MS_DiagramPane2', @value=N' SortOrder = 1416
          GroupBy = 1350
-         Filter = 1350
+         Filter = 1356
          Or = 1350
          Or = 1350
          Or = 1350
